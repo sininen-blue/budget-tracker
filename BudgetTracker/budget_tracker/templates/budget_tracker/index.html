@@ -6,24 +6,30 @@
 <h1>Balance</h1>
 {{ savings }}
 
-<a href="{% url 'budget_tracker:add_expense' %}">add expense</a>
-<a href="{% url 'budget_tracker:add_income' %}">add income</a>
+<a class="button" href="{% url 'budget_tracker:add_expense' %}">add expense</a>
+<a class="button" href="{% url 'budget_tracker:add_income' %}">add income</a>
 
-<h1>Expenses</h1>
-{% for expense in expenses %}
-    <p>{{ expense.quantity }}</p>
-    <p>{{ expense.category }}</p>
-    <p>{{ expense.date }}</p>
-    <a href="{% url 'budget_tracker:remove_expense' expense.id %}">Remove</a>
-    <a href="{% url 'budget_tracker:edit_expense' expense.id %}">Edit</a>
-{% endfor %}
 
-<h1>Incomes</h1>
-{% for income in incomes %}
-    <p>{{ income.quantity }}</p>
-    <p>{{ income.date }}</p>
-    <a href="{% url 'budget_tracker:remove_income' income.id %}">Remove</a>
-    <a href="{% url 'budget_tracker:edit_income' income.id %}">Edit</a>
-{% endfor %}
 
+<div class="transactions">
+    <div>
+        <h1>Expenses</h1>
+        {% for expense in expenses %}
+        <p>{{ expense.quantity }}</p>
+        <p>{{ expense.category }}</p>
+        <p>{{ expense.date }}</p>
+        <a class="button" href="{% url 'budget_tracker:edit_expense' expense.id %}">Edit</a>
+        <a class="button error" href="{% url 'budget_tracker:remove_expense' expense.id %}">Remove</a>
+        {% endfor %}
+    </div>
+    <div>
+        <h1>Incomes</h1>
+        {% for income in incomes %}
+        <p>{{ income.quantity }}</p>
+        <p>{{ income.date }}</p>
+        <a class="button" href="{% url 'budget_tracker:edit_income' income.id %}">Edit</a>
+        <a class="button error" href="{% url 'budget_tracker:remove_income' income.id %}">Remove</a>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}

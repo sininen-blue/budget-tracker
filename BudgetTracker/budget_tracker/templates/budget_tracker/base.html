@@ -4,7 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{% endblock %}</title>
+        
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'budget_tracker/base.css' %}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
     </head>
+    <body>
     <header>
         <a href="{% url 'budget_tracker:index' %}">Home</a> 
 
@@ -12,7 +17,8 @@
             <a href="{% url 'budget_tracker:logout_view' %}">Logout</a>
         {% endif %}
     </header>
-    <body>
-        {% block content %}{% endblock %}
+        <main>
+            {% block content %}{% endblock %}
+        </main>
     </body>
 </html>
