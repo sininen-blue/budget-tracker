@@ -7,6 +7,10 @@
     </head>
     <header>
         <a href="{% url 'budget_tracker:index' %}">Home</a> 
+
+        {% if current_user %}
+            <a href="{% url 'budget_tracker:logout_view' %}">Logout</a>
+        {% endif %}
     </header>
     <body>
         {% block content %}{% endblock %}
