@@ -1,0 +1,40 @@
+{% extends "budget_tracker/base.html" %}
+{% block title %}Add Expense{% endblock %}
+
+
+{% block content %}
+
+<form action="{% url 'budget_tracker:add_expense' %}" method="post">
+    {% csrf_token %}
+
+    <label for="expense_quantity">Expense Amount:</label>
+    <input type="number" id="expense_quantity" name="expense_quantity" placeholder="14.25" required>
+
+
+    <fieldset>
+        <legend>Expense Category:</legend>
+
+        <input type="radio" id="food" name="category" value="Food" checked>
+        <label for="food">Food</label>
+
+        <input type="radio" id="travel" name="category" value="Travel">
+        <label for="travel">Travel</label>
+
+        <input type="radio" id="shopping" name="category" value="Shopping">
+        <label for="shopping">Shopping</label>
+
+        <input type="radio" id="necessities" name="category" value="Necessities">
+        <label for="necessities">Necessities</label>
+
+        <input type="radio" id="entertainment" name="category" value="Entertainment">
+        <label for="entertainment">Entertainment</label>
+
+        <input type="radio" id="other" name="category" value="Other">
+        <label for="other">Other</label>
+    </fieldset>
+
+    <input type="submit" value="Add Expense">
+</form>
+
+
+{% endblock %}

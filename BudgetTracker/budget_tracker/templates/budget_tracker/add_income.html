@@ -1,0 +1,17 @@
+{% extends "budget_tracker/base.html" %}
+{% block title %}Add Expense{% endblock %}
+
+
+{% block content %}
+
+<form action="{% url 'budget_tracker:add_income' %}" method="post">
+    {% csrf_token %}
+
+    <label for="income_quantity">Income Amount:</label>
+    <input type="number" id="income_quantity" name="income_quantity" placeholder="14.25" required>
+
+    <input type="submit" value="Add Income">
+</form>
+
+
+{% endblock %}
