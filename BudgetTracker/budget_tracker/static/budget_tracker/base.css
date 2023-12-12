@@ -1,8 +1,16 @@
 main {
     max-width: 700px;
     margin: auto;
+    margin-top: 3.5em;
 }
 
+
 .transactions {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.smallButton {
+    font-size: .75em;
 }

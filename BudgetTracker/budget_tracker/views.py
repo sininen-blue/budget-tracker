@@ -80,6 +80,8 @@ def set_savings():
         for income in income_list:
             user_profile.savings += income.quantity
 
+    user_profile.savings = round(user_profile.savings, 2)
+
     user_profile.save()
 
 

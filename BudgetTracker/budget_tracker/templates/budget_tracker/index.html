@@ -3,8 +3,14 @@
 
 
 {% block content %}
-<h1>Balance</h1>
-{{ savings }}
+<div class="card savings">
+    <header>
+        <h3>Balance</h3>
+    </header>
+    <footer>
+        <h1>₱{{ savings }}</h1>
+    </footer>
+</div>
 
 <a class="button" href="{% url 'budget_tracker:add_expense' %}">add expense</a>
 <a class="button" href="{% url 'budget_tracker:add_income' %}">add income</a>
@@ -13,23 +19,52 @@
 
 <div class="transactions">
     <div>
-        <h1>Expenses</h1>
-        {% for expense in expenses %}
-        <p>{{ expense.quantity }}</p>
-        <p>{{ expense.category }}</p>
-        <p>{{ expense.date }}</p>
-        <a class="button" href="{% url 'budget_tracker:edit_expense' expense.id %}">Edit</a>
-        <a class="button error" href="{% url 'budget_tracker:remove_expense' expense.id %}">Remove</a>
-        {% endfor %}
+        <header>
+            <h2>Expenses</h2>
+        </header>
+
+        {% if expenses %}
+        <footer>
+            {% for expense in expenses %}
+            <div class="card">
+                <header>
+                    <p>₱{{ expense.quantity }}
+                        <span class="label success">{{ expense.category }}</span>
+                        <span class="label warning">{{ expense.date }}</span>
+                    </p>
+                </header>
+                <footer>
+                    <a class="smallButton button" href="{% url 'budget_tracker:edit_expense' expense.id %}">Edit</a>
+                    <a class="smallButton button dangerous" href="{% url 'budget_tracker:remove_expense' expense.id %}">Remove</a>
+                </footer>
+            </div>
+            {% endfor %}
+        </footer>
+        {% endif %}
     </div>
+
     <div>
-        <h1>Incomes</h1>
-        {% for income in incomes %}
-        <p>{{ income.quantity }}</p>
-        <p>{{ income.date }}</p>
-        <a class="button" href="{% url 'budget_tracker:edit_income' income.id %}">Edit</a>
-        <a class="button error" href="{% url 'budget_tracker:remove_income' income.id %}">Remove</a>
-        {% endfor %}
+        <header>
+            <h2>Incomes</h2>
+        </header>
+
+        {% if incomes %}
+        <footer>
+            {% for income in incomes %}
+            <div class="card">
+                <header>
+                    <p>₱{{ income.quantity }}
+                        <span class="label warning">{{ income.date }}</span>
+                    </p>
+                </header>
+                <footer>
+                    <a class="smallButton button" href="{% url 'budget_tracker:edit_income' income.id %}">Edit</a>
+                    <a class="smallButton button dangerous" href="{% url 'budget_tracker:remove_income' income.id %}">Remove</a>
+                </footer>
+            </div>
+            {% endfor %}
+        </footer>
+        {% endif %}
     </div>
-</section>
-{% endblock %}
+    </section>
+    {% endblock %}

@@ -3,11 +3,12 @@
 
 
 {% block content %}
+<h1>Edit Income</h1>
 <form action="{% url 'budget_tracker:edit_income' income.id %}" method="post">
     {% csrf_token %}
 
     <label for="income_quantity">Income Amount:</label>
-    <input type="number" id="income_quantity" name="income_quantity" value="{{ income.quantity }}" required>
+    <input type="number" step="0.01" id="income_quantity" name="income_quantity" value="{{ income.quantity }}" required>
 
     <input type="submit" value="Add Income">
 </form>

@@ -10,13 +10,18 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
     </head>
     <body>
-    <header>
-        <a href="{% url 'budget_tracker:index' %}">Home</a> 
+    <nav>
+        <a class="brand" href="{% url 'budget_tracker:index' %}">
+                <span>Budget Tracker</span>
+        </a> 
 
         {% if current_user %}
-            <a href="{% url 'budget_tracker:logout_view' %}">Logout</a>
+            <div class="menu">
+                <a class="button" href="{% url 'budget_tracker:logout_view' %}">Logout</a>
+            </div>
         {% endif %}
-    </header>
+    </nav>
+
         <main>
             {% block content %}{% endblock %}
         </main>
