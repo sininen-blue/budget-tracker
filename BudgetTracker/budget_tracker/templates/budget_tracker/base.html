@@ -17,6 +17,7 @@
 
         {% if current_user %}
             <div class="menu">
+                <a class="pseudo button" href="#">{{ current_user.username }}</a>
                 <a class="button" href="{% url 'budget_tracker:logout_view' %}">Logout</a>
             </div>
         {% endif %}

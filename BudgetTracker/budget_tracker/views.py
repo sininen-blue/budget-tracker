@@ -54,22 +54,27 @@ def logout_view(request):
 
 @login_required(redirect_field_name="login_view", login_url="login/")
 def index(request):
-    set_savings()
-    savings = User.objects.get(username=request.user.username).userprofile.savings
+    set_savings(request)
+    user_profile = User.objects.get(username=request.user.username).userprofile
+
+    savings = user_profile.savings
+    expense_list = Expense.objects.filter(userprofile=user_profile)
+    income_list = Income.objects.filter(userprofile=user_profile)
+
     context = {
         "current_user": request.user,
         "savings": savings,
-        "expenses": Expense.objects.all(),
-        "incomes": Income.objects.all(),
+        "expenses": expense_list,
+        "incomes": income_list,
     }
     return render(request, "budget_tracker/index.html", context)
 
 
-def set_savings():
-    expense_list = Expense.objects.all()
-    income_list = Income.objects.all()
+def set_savings(request):
+    user_profile = User.objects.get(username=request.user.username).userprofile
+    expense_list = Expense.objects.filter(userprofile=user_profile)
+    income_list = Income.objects.filter(userprofile=user_profile)
 
-    user_profile = User.objects.get(username="neil").userprofile
     user_profile.savings = 0
 
     if expense_list:
@@ -90,7 +95,14 @@ def add_expense(request):
     if request.method == "POST":
         expense_category = request.POST["category"]
         expense_quantity = float(request.POST["expense_quantity"])
-        Expense.objects.create(category=expense_category, quantity=expense_quantity)
+
+        user_profile = User.objects.get(username=request.user.username).userprofile
+
+        Expense.objects.create(
+            category=expense_category,
+            quantity=expense_quantity,
+            userprofile=user_profile,
+        )
 
         return redirect("/")
     else:
@@ -127,13 +139,13 @@ def edit_expense(request, expense_id):
 def add_income(request):
     if request.method == "POST":
         income_quantity = float(request.POST["income_quantity"])
-        Income.objects.create(quantity=income_quantity)
 
-        current_user = User.objects.get(username="neil")
-        current_user.userprofile.savings += income_quantity
-        current_user.userprofile.save()
+        user_profile = User.objects.get(username=request.user.username).userprofile
 
-        print(current_user.userprofile.savings)
+        Income.objects.create(
+            quantity=income_quantity,
+            userprofile=user_profile,
+        )
 
         return redirect("/")
     else:
@@ -161,6 +173,4 @@ def edit_income(request, income_id):
         return redirect("/")
 
     context = {"income": income_instance}
-    return render(request, "budget_tracker/edit_income.html", context)
-    return render(request, "budget_tracker/edit_income.html", context)
     return render(request, "budget_tracker/edit_income.html", context)
